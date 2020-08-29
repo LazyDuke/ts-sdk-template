@@ -62,7 +62,7 @@ class Config {
       autoExternal()
     ]
 
-    if (format === 'umd') {
+    if (format === 'umd' || format === 'cjs') {
       plugins.pop()
     }
 
@@ -70,13 +70,18 @@ class Config {
   }
 
   buildExternal(format) {
-    const external = [/@babel\/runtime/]
-
     if (format === 'umd') {
-      external.pop()
+      return []
     }
 
-    return external
+    if (format === 'es') {
+      return [/@babel\/runtime/]
+    }
+
+    if (format === 'cjs') {
+      // 把所有 dependencies 中只提供了 cjs 格式的包全部放进来
+      return [/@babel\/runtime/]
+    }
   }
 
   toConfig() {
