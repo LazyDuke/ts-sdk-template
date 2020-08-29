@@ -45,6 +45,7 @@ class Config {
 
   bulidPlugins(format) {
     // Make sure autoExternal is the last plugin
+    // 保证 autoExternal 是最后一个插件
     const plugins = [
       nodeResolve({
         browser: true
@@ -79,6 +80,7 @@ class Config {
     }
 
     if (format === 'cjs') {
+      // Put all packages in dependencies which only ship cjs format in the array
       // 把所有 dependencies 中只提供了 cjs 格式的包全部放进来
       return [/@babel\/runtime/]
     }
