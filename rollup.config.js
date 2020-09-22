@@ -106,9 +106,13 @@ export default ['es', 'cjs', 'umd'].map(format => new Config(format).toConfig())
  * @returns
  */
 function camelize(str) {
-  const camelizeRE = /-(\w)/g
+  const camelizeRE = /(^\w)(\w+)-(\w)(\w+$)/g
 
-  return str
-    .replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ''))
-    .replace(/^\w/, str[0].toUpperCase())
+  return str.replace(camelizeRE, (_, p1, p2, p3, p4) => {
+    if (p1 && p2 && p3 && p4) {
+      return `${p1.toUpperCase()}${p2}${p3.toUpperCase()}${p4} `
+    } else {
+      return ''
+    }
+  })
 }
